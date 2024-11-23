@@ -1,6 +1,7 @@
 // File: game/GamePanel.java
 package game;
 
+import graphics.Renderer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -65,8 +66,8 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        grid.render(g, BLOCK_SIZE);
 
+        Renderer.drawGrid(g, 20, 10, BLOCK_SIZE);
         // Draw the current shape
         drawShape(g);
     }
