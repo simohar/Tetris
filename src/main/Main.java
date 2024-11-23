@@ -1,6 +1,8 @@
 package main;
 
 import javax.swing.JFrame;
+import game.GamePanel;
+import game.InputHandler;
 
 public class Main {
     public static final int WIDTH = 400, HEIGHT = 800;
@@ -11,8 +13,11 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        // TODO : Add the game panel
+        GamePanel gamePanel = new GamePanel(frame); // Pass the frame
+        frame.add(gamePanel);
+        frame.addKeyListener(new InputHandler(gamePanel));
 
+        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

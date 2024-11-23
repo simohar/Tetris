@@ -60,7 +60,8 @@ public class Grid {
     }
 
     // remove filled line
-    public void clearLines() {
+    public int clearLines() {
+        int linesCleared = 0;
         for (int i = 0; i < rows; i++) {
             boolean fullLine = true;
             for (int j = 0; j < cols; j++) {
@@ -71,8 +72,10 @@ public class Grid {
             }
             if (fullLine) {
                 removeLine(i);
+                linesCleared++;
             }
         }
+        return linesCleared;
     }
 
     private void removeLine(int line) {
