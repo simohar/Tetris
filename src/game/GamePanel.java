@@ -1,12 +1,13 @@
 // File: game/GamePanel.java
 package game;
 
-import graphics.Renderer;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final int BLOCK_SIZE = 30;
@@ -16,8 +17,11 @@ public class GamePanel extends JPanel implements Runnable {
     private int shapeX = 3, shapeY = 0; // Starting position
     private Thread gameThread;
     private boolean running = false;
+    private int score = 0;
+    private JFrame frame;
 
-    public GamePanel() {
+    public GamePanel(JFrame frame) {
+        this.frame = frame;
         setPreferredSize(new Dimension(COLS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
         setBackground(Color.black);
         grid = new Grid(ROWS, COLS);
@@ -61,15 +65,22 @@ public class GamePanel extends JPanel implements Runnable {
             shapeX = 3;
             shapeY = 0;
         }
+        if (!grid.isValidPosition(currentShape, shapeX, shapeY)) {
+            running = false; // Stop the game loop
+            System.out.println("Game Over!");
+        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        Renderer.drawGrid(g, 20, 10, BLOCK_SIZE);
-        // Draw the current shape
+        grid.render(g, BLOCK_SIZE);
         drawShape(g);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Score: " + score, 10, 20);
+
     }
 
     private void drawShape(Graphics g) {
