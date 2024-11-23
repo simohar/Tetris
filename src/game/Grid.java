@@ -58,4 +58,33 @@ public class Grid {
                 g.drawRect(j * blockSize, i * blockSize, blockSize, blockSize);
             }
     }
+
+    // remove filled line
+    public void clearLines() {
+        for (int i = 0; i < rows; i++) {
+            boolean fullLine = true;
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == null) {
+                    fullLine = false;
+                    break;
+                }
+            }
+            if (fullLine) {
+                removeLine(i);
+            }
+        }
+    }
+
+    private void removeLine(int line) {
+        for (int i = line; i > 0; i--) {
+            for (int j = 0; j < cols; j++) {
+                grid[i][j] = grid[i - 1][j];
+            }
+        }
+        // Clear the top line
+        for (int j = 0; j < cols; j++) {
+            grid[0][j] = null;
+        }
+    }
+
 }
